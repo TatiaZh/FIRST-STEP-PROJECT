@@ -1,0 +1,297 @@
+:root{
+    --red: rgb(255, 105, 120);
+    --green: rgb(135, 211, 124);
+    --bluegreen: rgb(63, 149, 131);
+    --gray: #d1c3bc;
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+a{
+	text-decoration: none;
+	color: #000;
+}
+li{
+	list-style-type: none;
+}
+body{
+	background: #fff6f0;
+    font-family: sans-serif;
+    font-family: 'Lato';
+    color: #231F20;
+}
+h1,h2,h3,h4,h5,h6{
+    margin: 0;
+    padding: 0;
+}
+/* --------------------------------------------------------------- */
+.wrapper{ 
+    margin: auto;
+    display: grid;
+} 
+.header, .footer{
+    grid-area: header;
+    background-color: #f7e6d9;
+    font-family: 'Raleway';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1px;
+}
+.footer{
+    grid-area: footer;
+    align-content: flex-end;
+    flex-flow: wrap;
+    margin-top: 10px;
+}
+.footer h2{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.footer p{
+    text-align: center;
+}
+.main{
+    grid-area: main;
+    display: grid;
+    grid-gap: 5px;
+    border-radius: 1px;
+}
+.table{
+    display: grid;
+    grid-template-rows: repeat(15, 1fr);
+    grid-gap: 1px;
+    overflow: scroll;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.4), -1px -1px 3px rgba(0,0,0,.4) ;
+}
+.student, .studentFR{
+    display: grid;
+    /* grid-template-columns: repeat(30, 50px); */
+    grid-template-columns: repeat(9, minmax(50px, 1fr));
+    min-height: 40px;
+    grid-gap: 1px;
+}
+
+.day{
+    background-color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: text;
+}
+.day:hover{
+    background-color: rgb(231, 95, 109);
+}
+.day.frRow, .avr.frRow, .name.frRow{
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #b9afaa;
+}
+.name.frRow{
+    grid-column: 1 / span 7;
+}
+.avr.frRow{
+    grid-column: 8 / span 2;
+}
+.name, .avr{
+    grid-column: 1 / span 7;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gray);
+    position: sticky;
+    top:0;
+    left: 0;
+}
+.avr{
+    position: static;
+    grid-column: 8 / span 2;
+    background-color: var(--bluegreen);
+}
+.student, .studentFR{
+    grid-template-columns: repeat(4, minmax(50px, 1fr));
+}
+.name.frRow{
+    grid-column: 1 / span 3;
+}
+.avr.frRow{
+    grid-column: 4;
+}
+.name, .avr{
+    grid-column: 1 / span 3;
+}
+.avr{
+    grid-column: 4;
+}
+.main header{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.button{
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    border-radius: 4px;
+    box-shadow: 1px 2px 1px rgba(0,0,0,.6);
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+}
+.button.add{
+    background-color: var(--green);
+}
+.button.remove{
+    background-color: var(--red);
+}
+.button.update{
+    background-color: var(--bluegreen);
+}
+.button.add:hover{
+    background-color: rgb(119, 185, 109);
+}
+.button.remove:hover{
+    background-color: rgb(231, 95, 109);
+}
+.button.update:hover{
+    background-color: rgb(60, 136, 119);
+}
+.button:active{
+    transform: translateY(2px);
+}
+.statistics{
+    grid-area: statistics;
+    background-color: #f7e6d9;
+}
+.statistics p{
+    margin: 20px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.studentPresent{
+    background-color: var(--green);
+}
+.studentPresent:hover{
+    background-color: rgb(119, 185, 109);
+}
+@media screen and (min-width: 280px){
+    .wrapper{
+        grid-template-rows: minmax(80px, auto) auto minmax(100px, auto);
+        grid-template-areas:
+        "header"
+        "main"
+        "statistics"
+        "footer";
+        grid-gap: 5px;
+    }
+    .header h1, .footer h2{
+        font-size: 1.2em;
+    }
+    .footer p{
+        font-size: .8em;
+    }
+    
+    .main{
+        grid-template-rows: minmax(45px, auto) auto;
+    }
+    .main header{
+        padding: 5px;
+    }
+    .main header h1{
+        font-size: 1.5em;
+    }
+    .button{
+        width: 80px;
+        height: 30px;
+        font-size: .65em;
+        border-radius: 3px;
+    }
+    .statistics{
+        padding: 10px;
+        border-radius: 2px;
+    }
+    .statistics h1{
+        font-size: 1.4em;
+    }
+
+}
+@media screen and (min-width: 600px){
+    .wrapper{
+        max-width: 100%;
+        grid-template-areas:
+        "header"
+        "main"
+        "statistics"
+        "footer";
+    }
+    .header h1, .footer h2{
+        font-size: 1.6em;
+    }
+    .footer p{
+        font-size: 1em;
+    }
+    .main{
+        grid-template-rows: minmax(60px, auto) auto;
+    }
+    .main header{
+        padding: 10px;
+    }
+    .main header h1{
+        font-size: 1.9em;
+    }
+    .button{
+        width: 100px;
+        height: 40px;
+        font-size: .75em;
+    }
+}
+@media screen and (min-width: 800px){
+    .wrapper{
+        grid-template-rows: minmax(100px, auto) auto minmax(100px, auto);
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas:
+        "header header"
+        "statistics main"
+        "footer footer";
+    }
+}
+@media screen and (min-width: 1000px){
+    .wrapper{
+        max-width: 1200px;
+    } 
+    .header h1{
+        font-size: 2em;
+    }
+    .footer h2{
+        font-size: 1.5em;
+    }
+    .main{
+        max-width: 900px;
+        padding-left: 10px;
+        grid-template-rows: minmax(80px, auto) auto;
+    }
+    .main header{
+        padding: 15px;
+    }
+    .main header h1{
+        font-size: 2em;
+    }
+    .button{
+        margin-top: 5px;
+        width: 150px;
+        height: 40px;
+        font-size: 1em;
+    }
+    .statistics{
+        padding: 15px;
+        border-radius: 3px;
+    }
+    .statistics h1{
+        font-size: 1.8em;
+    }
+}
