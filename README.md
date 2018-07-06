@@ -1,4 +1,4 @@
-# Techub First Step Project 
+# TECHUB FIRST STEP PROJECT 
 ## Student Management Systemt 
 
 As a first step project you are going to develop **Student management system** using only HTML/CSS/Javascript 
