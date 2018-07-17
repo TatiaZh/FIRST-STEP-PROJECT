@@ -40,16 +40,16 @@ function genrateDate(operator) {
     let currentDate = new Date();
     currentDate.setTime(parseInt(addDayButton.dataset.date));
     let nextDate = new Date();
-    if(operator=='+'){
+    if (operator == '+') {
         nextDate.setTime(currentDate.getTime() + 86400000 * 2);
         if (currentDate.getDay() == 5) {
             nextDate.setTime(currentDate.getTime() + 86400000);
-        } 
+        }
     }
-    else{
+    else {
         nextDate.setTime(currentDate.getTime() - 86400000 * 2);
         if (currentDate.getDay() == 6) {
-        nextDate.setTime(currentDate.getTime() - 86400000);
+            nextDate.setTime(currentDate.getTime() - 86400000);
         }
     }
     addDayButton.dataset.date = nextDate.getTime();
@@ -82,14 +82,22 @@ function styleDaysByGrowth(grow) {
 /*------------------------- REMOVE DAY -------------------------------  */
 // Function removes last added date from table
 function removeDay() {
-    let studentFR = document.querySelector('.studentFR');
-    let studentFRChildren = document.querySelectorAll('.day.frRow');
-    studentFR.removeChild(studentFRChildren[studentFRChildren.length - 1]);
-    let students = document.querySelectorAll('.student');
-    students.forEach(element => {
-        let studentsChildren = element.querySelectorAll('.day');
-        element.removeChild(studentsChildren[studentsChildren.length - 1]);
-    });
+    try {
+
+        let studentFR = document.querySelector('.studentFR');
+        let studentFRChildren = document.querySelectorAll('.day.frRow');
+        studentFR.removeChild(studentFRChildren[studentFRChildren.length - 1]);
+        let students = document.querySelectorAll('.student');
+        students.forEach(element => {
+            let studentsChildren = element.querySelectorAll('.day');
+            element.removeChild(studentsChildren[studentsChildren.length - 1]);
+        });
+        styleDaysByGrowth(false);
+    }
+    catch (ex) {
+        console.log(ex);
+    }
+
 }
 // Function adds evenlistener to button named REMOVE DAY
 // clicking this button causes to remove last added day from table, generate date 
@@ -97,7 +105,7 @@ function removeDay() {
 removeDayButton.addEventListener('click', event => {
     removeDay();
     genrateDate('-');
-    styleDaysByGrowth(false);
+    // styleDaysByGrowth(false);
     updateStatistics();
 });
 // ----------------------------------------------------------------------- //
@@ -111,12 +119,18 @@ function updateMarks() {
         let clickedCell = event.target;
         let tabelCellArray = Array.from(clickedCell.classList);
         if (tabelCellArray.includes("day") || tabelCellArray.includes("studentPresent")) {
-            let mark = Number(prompt("Please Enter Student's Mark", '0'));
+            let mark;
+            while (isNaN(mark)) {
+                mark = Number(prompt("Please Enter Student's Mark", '0'));
+                if (isNaN(mark)) {
+                    mark = Number(prompt("Please Enter Student's Mark ONLY IN NUMBER FORMAT", '0'));
+                }
+            };
             mark < 0 ? mark = 0 : mark = mark;
-            mark > 4 ? mark = 5 : mark = mark;
-            mark == null ? mark = clickedCell.innerHTML : mark = mark;
+            mark > 5 ? mark = 5 : mark = mark;
+            mark == null ? mark = clickedCell.textContent : mark = mark;
             mark > 0 ? clickedCell.classList.add("studentPresent") : clickedCell.classList.remove("studentPresent");;
-            clickedCell.innerHTML = mark;
+            clickedCell.textContent = mark;
             updateStatistics();
 
         }
@@ -128,7 +142,7 @@ updateMarks();
 
 /*------------------------- UPDATE STATISTICS -------------------------------  */
 // Function uptades the statistics section when clicking on the button named UPDATE TABLE
-updateTableButton.addEventListener('click', event =>{
+updateTableButton.addEventListener('click', event => {
     updateStatistics();
     /* 
         This function and the button itself are not really useful
@@ -151,34 +165,35 @@ function updateMissedLessons() {
     students.forEach(element => {
         let marks = Array.from(element.querySelectorAll('.day'));
         for (e of marks) {
-            if (e.innerHTML == '0') {
+            if (e.textContent == '0') {
                 counter++;
             }
         };
     });
-    missedLessons.innerHTML = counter;
+    missedLessons.textContent = counter;
 }
 // Function updates the number of total days
 function updateTotalDays() {
     let totalDays = document.querySelector('.totalDays');
     let totalDaysArray = document.querySelectorAll('.day.frRow');
-    totalDays.innerHTML = totalDaysArray.length;
+    totalDays.textContent = totalDaysArray.length;
 }
 // Function updates the average mark of all students
 function updateAverageMark() {
     let avr = 0;
     let averages = document.querySelectorAll('.student .avr');
     for (e of averages) {
-        avr += parseFloat(e.innerHTML);
+        avr += parseFloat(e.textContent);
     }
     let averageMark = document.querySelector('.averageMark');
-    averageMark.innerHTML = (avr / averages.length).toFixed(2);
+    averageMark.textContent = (avr / averages.length).toFixed(2);
+    
 }
 // Function updates the total number of students
 function updateTotalStudents() {
     let totalStudents = document.querySelector('.totalStudents');
     let students = document.querySelectorAll('.student');
-    totalStudents.innerHTML = students.length;
+    totalStudents.textContent = students.length;
 }
 updateTotalStudents();
 // Function calculates the average mark of each student as well as of all students
@@ -189,9 +204,9 @@ function calculateAverage() {
         let avr = 0;
         let marks = Array.from(element.querySelectorAll('.day'));
         for (e of marks) {
-            avr += parseFloat(e.innerHTML);
+            avr += parseFloat(e.textContent);
         };
-        averageMark.innerHTML = (avr / marks.length).toFixed(2);
+        averageMark.textContent = (avr / marks.length).toFixed(2);
     });
     updateAverageMark();
 }
